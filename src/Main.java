@@ -19,6 +19,7 @@ public class Main {
     );
 
     public static void main(String[] args) {
+
         Control control = new Control();
         boolean exit = false;
         while (!exit) {
@@ -60,6 +61,7 @@ public class Main {
                                     }
 
                                 }
+
                                 boolean wrongadd = false;
                                 String inputAddress ="";
                                 while (!wrongadd) {
@@ -92,11 +94,23 @@ public class Main {
                                 ((Volunteer) volunteer).setSalary(inputSalary);
                                id++;
                                 he.add(volunteer);
-                                System.out.printf("Enter Again Click Y:");
-                                String inputAgain = sc.nextLine().toLowerCase();
-                                if (inputAgain.equals("n")) {
-                                    again = true;
+                                boolean validadd = false;
+                                while(!validadd){
+                                    System.out.printf("Enter Again Click Y:");
+                                    String inputAgain = sc.nextLine().toLowerCase();
+                                    if(inputAgain.equals("y")){
+                                        break;
+                                    }
+                                    else if (inputAgain.equals("n")) {
+                                        validadd = true;
+                                        again = true;
+                                    }
+                                    else {
+                                        System.out.println("Please Enter Valid Option");
+                                      return;
+                                    }
                                 }
+
                             }
                         }
                         case "2" -> {
@@ -165,10 +179,21 @@ public class Main {
                                 ((SalaredEmployee) salaredEmployee).setBonus(inputBonus);
                                 id++;
                                 he.add(salaredEmployee);
-                                System.out.printf("Enter Again Click Y :");
-                                String inputAgain = sc.nextLine().toLowerCase();
-                                if (inputAgain.equals("n")) {
-                                    again = true;
+                                boolean validadd = false;
+                                while(!validadd){
+                                    System.out.printf("Enter Again Click Y:");
+                                    String inputAgain = sc.nextLine().toLowerCase();
+                                    if(inputAgain.equals("y")){
+                                        break;
+                                    }
+                                    else if (inputAgain.equals("n")) {
+                                        validadd = true;
+                                        again = true;
+                                    }
+                                    else {
+                                        System.out.println("Please Enter Valid Option");
+                                        return;
+                                    }
                                 }
 
                             }
@@ -239,10 +264,21 @@ public class Main {
                                 ((HourlyEmployee) hourEmployee).setHourWorked(inputHour);
                                 id++;
                                 he.add(hourEmployee);
-                                System.out.printf("Enter Again Click Y:");
-                                String inputAgain = sc.nextLine().toLowerCase();
-                                if (inputAgain.equals("n")) {
-                                    again = true;
+                                boolean validadd = false;
+                                while(!validadd){
+                                    System.out.printf("Enter Again Click Y:");
+                                    String inputAgain = sc.nextLine().toLowerCase();
+                                    if(inputAgain.equals("y")){
+                                        break;
+                                    }
+                                    else if (inputAgain.equals("n")) {
+                                        validadd = true;
+                                        again = true;
+                                    }
+                                    else {
+                                        System.out.println("Please Enter Valid Option");
+                                        return;
+                                    }
                                 }
                             }
                         }

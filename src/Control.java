@@ -2,9 +2,6 @@ import org.nocrala.tools.texttablefmt.BorderStyle;
 import org.nocrala.tools.texttablefmt.CellStyle;
 import org.nocrala.tools.texttablefmt.ShownBorders;
 import org.nocrala.tools.texttablefmt.Table;
-
-import java.util.Iterator;
-
 public class Control {
     void mainMenu(){
         Table table = new Table(2, BorderStyle.UNICODE_ROUND_BOX_WIDE, ShownBorders.ALL);
@@ -89,7 +86,6 @@ public class Control {
                 Double inputsalary = 0.0;
                 while (!wrongsalary) {
                     System.out.printf("Please Enter New Salary: ");
-                    Main.sc.nextLine();
                     String salary = Main.sc.nextLine();
                     if (salary.matches("^[0-9]*\\.?[0-9]*$")) {
                         inputsalary = Double.parseDouble(salary);
@@ -133,14 +129,13 @@ public class Control {
         System.out.println(table.render());
         System.out.printf("Select Your Option: ");
         String option = Main.sc.next();
-
+        Main.sc.nextLine();
         switch (option) {
             case "1" -> {
                 boolean wrong = false;
                 String inputName ="";
                 while (!wrong) {
                     System.out.printf("Please Enter New Name: ");
-                    Main.sc.nextLine();
                     inputName = Main.sc.nextLine().toUpperCase();
                     if (inputName.matches("^[a-zA-Z]+$")) {
                         sal.name = inputName;
@@ -158,7 +153,6 @@ public class Control {
                 String inputAddress ="";
                 while (!wrong) {
                     System.out.printf("Please Enter New Address: ");
-                    Main.sc.nextLine();
                     inputAddress = Main.sc.nextLine().toUpperCase();
                     if (inputAddress.matches("^[a-zA-Z]+$")) {
                         sal.address = inputAddress;
@@ -176,7 +170,6 @@ public class Control {
                 Double inputsalary = 0.0;
                 while (!wrongsalary) {
                     System.out.printf("Please Enter New Salary: ");
-                    Main.sc.nextLine();
                     String salary = Main.sc.nextLine();
                     if (salary.matches("^[0-9]*\\.?[0-9]*$")) {
                         inputsalary = Double.parseDouble(salary);
@@ -196,7 +189,6 @@ public class Control {
                 Double inputbonus = 0.0;
                 while (!wrongbonus) {
                     System.out.printf("Please Enter New Bonus : ");
-                    Main.sc.nextLine();
                     String bonus = Main.sc.nextLine();
                     if (bonus.matches("^[0-9]*\\.?[0-9]*$")) {
                         inputbonus = Double.parseDouble(bonus);
@@ -263,7 +255,6 @@ public class Control {
                 String inputAddress ="";
                 while (!wrong) {
                     System.out.printf("Please Enter New Address: ");
-                    Main.sc.nextLine();
                     inputAddress = Main.sc.nextLine().toUpperCase();
                     if (inputAddress.matches("^[a-zA-Z]+$")) {
                         hour.address = inputAddress;
@@ -282,7 +273,6 @@ public class Control {
                 Integer inputhour= 0;
                 while (!wronghour) {
                     System.out.printf("Please Enter New Hour : ");
-                    Main.sc.nextLine();
                     String hours = Main.sc.nextLine();
                     if (hours.matches("^[0-9]*\\.?[0-9]*$")) {
                         inputhour = Integer.parseInt(hours);
@@ -303,7 +293,6 @@ public class Control {
                 Double inputrate = 0.0;
                 while (!wrongrate) {
                     System.out.printf("Please Enter New Rate : ");
-                    Main.sc.nextLine();
                     String rate = Main.sc.nextLine();
                     if (rate.matches("^[0-9]*\\.?[0-9]*$")) {
                         inputrate = Double.parseDouble(rate);
@@ -356,9 +345,8 @@ void updateStaff() {
             case "1" -> {
                 System.out.printf("Please enter the ID of the staff you want to update: ");
                 int inputId = Main.sc.nextInt();
-                Main.sc.nextLine();
-                boolean found = false;
-                for (StaffMember staff : Main.he) {
+                Main.he.forEach(staff ->{
+                    boolean found = false;
                     if (staff.id == inputId) {
                         found = true;
                         if (staff instanceof Volunteer) {
@@ -373,15 +361,13 @@ void updateStaff() {
                         } else {
                             System.out.println("Invalid staff type.");
                         }
-                        break;
+                        if (!found) {
+                     System.out.println("Staff not found.");
+                }
 
                     }
 
-
-                }
-                if (!found) {
-                    System.out.println("Staff not found.");
-                }
+                });
             }
             case "2" ->{
                 System.out.println("Returning to the Main menu...");
@@ -464,7 +450,7 @@ void updateStaff() {
                         table.addCell(hoe.address, cellStyle2);
                         table.addCell("...", cellStyle2);
                         table.addCell("...", cellStyle2);
-                        table.addCell(String.valueOf(hoe.getHourWorked()+"H"), cellStyle2);
+                        table.addCell(String.valueOf(hoe.getHourWorked()+" H"), cellStyle2);
                         table.addCell(String.valueOf("$"+hoe.getRate()), cellStyle2);
                         Double payed = hoe.pay(hoe.getHourWorked(), hoe.getRate());
                         table.addCell(String.valueOf(payed), cellStyle2);
@@ -530,6 +516,7 @@ void updateStaff() {
         }
 
     }
+
     void displaywhenDelete(){
         Table table = new Table(9, BorderStyle.UNICODE_ROUND_BOX_WIDE, ShownBorders.ALL);
         table.setColumnWidth(0,30,30);
@@ -552,48 +539,48 @@ void updateStaff() {
         table.addCell("HOUR", cellStyle);
         table.addCell("RATE", cellStyle);
         table.addCell("PAY", cellStyle);
-        for (int i = 0; i < Main.he.size(); i++) {
-            if (Main.he.get(i) instanceof Volunteer) {
-                Volunteer vol = (Volunteer) Main.he.get(i);
+        Main.he.forEach(obj -> {
+            if (obj instanceof Volunteer) {
+                Volunteer vol = (Volunteer) obj;
                 table.addCell("VOLUNTEER", cellStyle2);
                 table.addCell(String.valueOf(vol.id), cellStyle2);
                 table.addCell(vol.name, cellStyle2);
                 table.addCell(vol.address, cellStyle2);
-                table.addCell(String.valueOf("$"+vol.getSalary()), cellStyle2);
+                table.addCell(String.valueOf("$" + vol.getSalary()), cellStyle2);
                 table.addCell("...", cellStyle2);
                 table.addCell("...", cellStyle2);
                 table.addCell("...", cellStyle2);
                 Double payed = vol.pay(vol.getSalary());
                 table.addCell(String.valueOf(payed), cellStyle2);
-            }
-            if (Main.he.get(i) instanceof SalaredEmployee) {
-                SalaredEmployee salared = (SalaredEmployee) Main.he.get(i);
+            } else if (obj instanceof SalaredEmployee) {
+                SalaredEmployee salared = (SalaredEmployee) obj;
                 table.addCell("SALARED_EMPLOYEE", cellStyle2);
                 table.addCell(String.valueOf(salared.id), cellStyle2);
                 table.addCell(salared.name, cellStyle2);
                 table.addCell(salared.address, cellStyle2);
-                table.addCell(String.valueOf("$"+salared.getSalary()), cellStyle2);
-                table.addCell(String.valueOf("$"+salared.getBonus()), cellStyle2);
+                table.addCell(String.valueOf("$" + salared.getSalary()), cellStyle2);
+                table.addCell(String.valueOf("$" + salared.getBonus()), cellStyle2);
                 table.addCell("...", cellStyle2);
                 table.addCell("...", cellStyle2);
                 Double payed = salared.pay(salared.getSalary(), salared.getBonus());
                 table.addCell(String.valueOf(payed), cellStyle2);
-            }
-            if (Main.he.get(i) instanceof HourlyEmployee) {
-                HourlyEmployee hoe = (HourlyEmployee) Main.he.get(i);
+            } else if (obj instanceof HourlyEmployee) {
+                HourlyEmployee hoe = (HourlyEmployee) obj;
                 table.addCell("HOURLY EMPLOYEE", cellStyle2);
                 table.addCell(String.valueOf(hoe.id), cellStyle2);
                 table.addCell(hoe.name, cellStyle2);
                 table.addCell(hoe.address, cellStyle2);
                 table.addCell("...", cellStyle2);
                 table.addCell("...", cellStyle2);
-                table.addCell(String.valueOf(hoe.getHourWorked()+" H"), cellStyle2);
-                table.addCell(String.valueOf("$"+hoe.getRate()), cellStyle2);
+                table.addCell(String.valueOf(hoe.getHourWorked() + " H"), cellStyle2);
+                table.addCell(String.valueOf("$" + hoe.getRate()), cellStyle2);
                 Double payed = hoe.pay(hoe.getHourWorked(), hoe.getRate());
                 table.addCell(String.valueOf(payed), cellStyle2);
             }
-        }
-        System.out.println(table.render());
+        });
+
+         System.out.println(table.render());
+
     }
     void deleteStaff() {
         displaywhenDelete();
@@ -615,19 +602,17 @@ void updateStaff() {
                 System.out.println("Please Enter Valid Employee ID.");
             }
         }
-        boolean found = false;
-        Iterator<StaffMember> iterator = Main.he.iterator();
-        while (iterator.hasNext()) {
-            StaffMember staffMember = iterator.next();
-            if (staffMember.id == inputId) {
-                iterator.remove();
-                found = true;
-                System.out.println("Deleted Successfully");
-                break;
-            }
-        }
-        if (!found) {
-            System.out.println("Staff not found");
+        Integer finalInputId = inputId;
+        Boolean removed = Main.he.removeIf(obj -> {
+           if (obj.id.equals(finalInputId)) {
+               System.out.println("Employee " + finalInputId + " removed Successfully");
+                return true;
+           }
+           return false;
+       }
+       );
+        if (!removed) {
+            System.out.println("Employee " + finalInputId + " not removed");
         }
     }
 }
